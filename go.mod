@@ -1,4 +1,4 @@
-module github.com/fiatjaf/relayer
+module hubrelayer
 
 go 1.18
 
