@@ -1,9 +1,10 @@
-package relayer
+package main
 
 import (
 	"fmt"
 
-	"github.com/fiatjaf/relayer/storage"
+	"hubrelayer/storage"
+
 	"github.com/nbd-wtf/go-nostr"
 )
 
@@ -57,7 +58,7 @@ func AddEvent(relay Relay, evt nostr.Event) (accepted bool, message string) {
 		}
 	}
 
-	notifyListeners(&evt)
+	NotifyListeners(&evt)
 
 	return true, ""
 }

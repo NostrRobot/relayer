@@ -1,4 +1,4 @@
-package relayer
+package main
 
 import (
 	"crypto/rand"
@@ -258,7 +258,7 @@ func (s *Server) handleWebsocket(w http.ResponseWriter, r *http.Request) {
 						notice = "CLOSE has no <id>"
 						return
 					}
-
+					s.relay.UserExit(id)
 					removeListenerId(ws, id)
 				case "AUTH":
 					if auther, ok := s.relay.(Auther); ok {
@@ -269,6 +269,7 @@ func (s *Server) handleWebsocket(w http.ResponseWriter, r *http.Request) {
 						}
 						if pubkey, ok := nip42.ValidateAuthEvent(&evt, ws.challenge, auther.ServiceURL()); ok {
 							ws.authed = pubkey
+							s.relay.UserAuth(pubkey)
 							ws.WriteJSON([]interface{}{"OK", evt.ID, true, "authentication success"})
 						} else {
 							ws.WriteJSON([]interface{}{"OK", evt.ID, false, "error: failed to authenticate"})
@@ -319,7 +320,7 @@ func (s *Server) handleNIP11(w http.ResponseWriter, r *http.Request) {
 		PubKey:        "~",
 		Contact:       "~",
 		SupportedNIPs: supportedNIPs,
-		Software:      "https://github.com/fiatjaf/relayer",
+		Software:      "https://github.com/NostrRobot/relayer",
 		Version:       "~",
 	}
 

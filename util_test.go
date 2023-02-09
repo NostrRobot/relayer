@@ -1,4 +1,4 @@
-package relayer
+package main
 
 import (
 	"context"
@@ -39,8 +39,10 @@ type testRelay struct {
 	acceptEvent   func(*nostr.Event) bool
 }
 
-func (tr *testRelay) Name() string     { return tr.name }
-func (tr *testRelay) Storage() Storage { return tr.storage }
+func (tr *testRelay) UserAuth(id string) {}
+func (tr *testRelay) UserExit(id string) {}
+func (tr *testRelay) Name() string       { return tr.name }
+func (tr *testRelay) Storage() Storage   { return tr.storage }
 
 func (tr *testRelay) Init() error {
 	if fn := tr.init; fn != nil {

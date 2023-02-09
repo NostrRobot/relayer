@@ -1,4 +1,4 @@
-package relayer
+package main
 
 import (
 	"sync"
@@ -90,14 +90,28 @@ func removeListener(ws *WebSocket) {
 	}
 }
 
-func notifyListeners(event *nostr.Event) {
+func NotifyListeners(event *nostr.Event) {
+	// listenersMutex.Lock()
+	// defer func() {
+	// 	listenersMutex.Unlock()
+	// }()
+
+	// for ws, subs := range listeners {
+	// 	for id, listener := range subs {
+	// 		if !listener.filters.Match(event) {
+	// 			continue
+	// 		}
+	// 		ws.WriteJSON([]interface{}{"EVENT", id, event})
+	// 	}
+	// }
+}
+func NotifyListener(id string, event *nostr.Event) {
 	listenersMutex.Lock()
 	defer func() {
 		listenersMutex.Unlock()
 	}()
-
 	for ws, subs := range listeners {
-		for id, listener := range subs {
+		if listener, ok := subs[id]; ok {
 			if !listener.filters.Match(event) {
 				continue
 			}

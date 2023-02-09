@@ -1,4 +1,4 @@
-package relayer
+package main
 
 type Notice struct {
 	Kind    string `json:"kind"`

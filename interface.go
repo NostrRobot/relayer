@@ -1,4 +1,4 @@
-package relayer
+package main
 
 import (
 	"context"
@@ -27,6 +27,8 @@ type Relay interface {
 	AcceptEvent(*nostr.Event) bool
 	// Storage returns the relay storage implementation.
 	Storage() Storage
+	UserExit(id string)
+	UserAuth(id string)
 }
 
 // Auther is the interface for implementing NIP-42.

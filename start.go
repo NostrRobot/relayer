@@ -1,4 +1,4 @@
-package relayer
+package main
 
 import (
 	"context"
@@ -138,7 +138,7 @@ func (s *Server) startListener(ln net.Listener) error {
 	if inj, ok := s.relay.(Injector); ok {
 		go func() {
 			for event := range inj.InjectEvents() {
-				notifyListeners(&event)
+				NotifyListeners(&event)
 			}
 		}()
 	}
